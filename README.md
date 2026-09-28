@@ -26,3 +26,12 @@ GitHub (https://github.com/floci-io/floci)
 GitHub - floci-io/floci: Light, fluffy, and always free - The AWS Local Emulator alternative
 Light, fluffy, and always free - The AWS Local Emulator alternative - floci-io/floci
 
+
+
+# Screenshots
+
+### EC2 Instance Running
+![EC2 Instance](ec2-running.png)
+
+### Floci Dashboard
+![Floci Dashboard](floci-dashboard.png)
