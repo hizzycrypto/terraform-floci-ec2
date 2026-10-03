@@ -1,16 +1,33 @@
+ data "aws_ami" "latest-ubuntu" {
+  most_recent = true
+  owners      = ["099720109477"]
+
+  filter {
+    name   = "name"
+    values = ["ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-*"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+}
+
 resource "aws_key_pair" "levelup_key" {
   key_name   = "levelup_key"
   public_key = file(var.PATH_TO_PUBLIC_KEY)
 }
 
 resource "aws_instance" "MyFirstInstance" {
-  ami           = lookup(var.AMIS, var.AWS_REGION)
-  instance_type = "t2.micro"
-  key_name      = aws_key_pair.levelup_key.key_name
+  ami                    = data.aws_ami.latest-ubuntu.id
+  instance_type          = "t2.micro"
+  key_name               = aws_key_pair.levelup_key.key_name
+  vpc_security_group_ids = [aws_security_group.web_sg.id]
 
   tags = {
     Name = "custom_instance"
   }
+}
 
 #  provisioner "file" {
 #    source      = "installNginx.sh"
@@ -30,5 +47,5 @@ resource "aws_instance" "MyFirstInstance" {
 #    user        = var.INSTANCE_USERNAME
 #    private_key = file(var.PATH_TO_PRIVATE_KEY)
 #  }
-}
+
 
